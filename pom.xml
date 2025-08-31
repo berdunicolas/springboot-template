@@ -58,6 +58,14 @@
 			<version>3.5.5</version>
 		</dependency>
 
+		<!-- VALIDACION -->
+		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-validation -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-validation</artifactId>
+			<version>3.5.5</version>
+		</dependency>
+
 		<!-- SPRINGBOOT JPA -->
 		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-jpa -->
 		<dependency>

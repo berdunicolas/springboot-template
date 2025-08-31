@@ -3,8 +3,12 @@ package com.template.app.controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.template.app.dto.CreateItemDTO;
+import com.template.app.dto.UpdateItemDTO;
 import com.template.app.model.Item;
 import com.template.app.service.ItemService;
+
+import jakarta.validation.Valid;
 
 import java.util.List;
 
@@ -33,28 +37,25 @@ public class ItemController {
 
     @GetMapping("/{id}")
     public Item getItemById(@PathVariable Long id) {
-        return itemService.getItemById(id)
-            .orElseThrow(() -> new RuntimeException("Item no encontrado con id " + id));
+        return itemService.getItemById(id);
     }
     
     @PostMapping
-    public Item createItem(@RequestBody Item item) {        
-        return itemService.createItem(item);
+    public Item createItem(@Valid @RequestBody CreateItemDTO request) {
+        return itemService.createItem(request.makeItem());
     }
 
     @PutMapping("/{id}")
-    public Item updateItem(@PathVariable Long id, @RequestBody Item item) {
-        return itemService.updateItem(id, item);
+    public Item updateItem(@PathVariable Long id, @Valid @RequestBody UpdateItemDTO request) {
+        request.setId(id);
+
+        return itemService.updateItem(id, request.makeItem());
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteItem(@PathVariable Long id) {
-        boolean deleted = itemService.deleteItem(id);
+        itemService.deleteItem(id);
         
-        if (deleted) {
-            return ResponseEntity.noContent().build();
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        return ResponseEntity.noContent().build();
     }
 }
